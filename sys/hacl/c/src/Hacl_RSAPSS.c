@@ -500,6 +500,70 @@ Hacl_RSAPSS_rsapss_sign(
 }
 
 /**
+ * NOTE: Not derived from Hacl*
+ * This function simply performs the RSA decrypt operation
+ * 
+ * NOTE: NOT constant-time!
+ * 
+ * `decoded` is expected to have `nLen * sizeof(uint64_t)` bytes
+ * where `nLen = (modBits - 1U) / 64U + 1U`
+ * 
+ * Arguments are similar to that of `Hacl_RSAPSS_rsapss_verify`
+ */
+bool
+Hacl_RSAPSS_rsa_decrypt(
+  int32_t modBits,
+  uint32_t eBits,
+  uint64_t *pkey,
+  uint32_t sgntLen,
+  uint8_t *sgnt,
+  uint8_t *decoded
+)
+{
+  if (sgntLen != (modBits - 1U) / 8U + 1U) return false;
+
+  // Copied from Hacl_RSAPSS_rsapss_verify
+  uint32_t nLen = (modBits - 1U) / 64U + 1U;
+  KRML_CHECK_SIZE(sizeof (uint64_t), nLen);
+  uint64_t m[nLen];
+  memset(m, 0U, nLen * sizeof (uint64_t));
+  uint32_t nLen1 = (modBits - 1U) / 64U + 1U;
+  uint32_t k = (modBits - 1U) / 8U + 1U;
+  KRML_CHECK_SIZE(sizeof (uint64_t), nLen1);
+  uint64_t s[nLen1];
+  memset(s, 0U, nLen1 * sizeof (uint64_t));
+  Hacl_Bignum_Convert_bn_from_bytes_be_uint64(k, sgnt, s);
+  uint32_t nLen2 = (modBits - 1U) / 64U + 1U;
+  uint64_t *n = pkey;
+  uint64_t *r2 = pkey + nLen2;
+  uint64_t *e = pkey + nLen2 + nLen2;
+  uint64_t acc = 0ULL;
+  for (uint32_t i = 0U; i < nLen2; i++)
+  {
+    uint64_t beq = FStar_UInt64_eq_mask(s[i], n[i]);
+    uint64_t blt = ~FStar_UInt64_gte_mask(s[i], n[i]);
+    acc = (beq & acc) | (~beq & ((blt & 0xFFFFFFFFFFFFFFFFULL) | (~blt & 0ULL)));
+  }
+  uint64_t mask = acc;
+  if (mask != 0xFFFFFFFFFFFFFFFFULL) return false;
+
+  uint64_t mu = Hacl_Bignum_ModInvLimb_mod_inv_uint64(n[0U]);
+  Hacl_Bignum_Exponentiation_bn_mod_exp_vartime_precomp_u64((modBits - 1U) / 64U + 1U,
+    n,
+    mu,
+    r2,
+    s,
+    eBits,
+    e,
+    m);
+
+  // Convert back to bytes
+  Hacl_Bignum_Convert_bn_to_bytes_be_uint64(k, m, decoded);
+
+  return true;
+}
+
+/**
 Verify the signature `sgnt` of a message `msg`.
 
 @param a Hash algorithm to use. Allowed values for `a` are ...

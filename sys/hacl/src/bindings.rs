@@ -896,6 +896,17 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
+    #[doc = "Custom function to decrypt RSA message"]
+    pub fn Hacl_RSAPSS_rsa_decrypt(
+        modBits: u32,
+        eBits: u32,
+        pkey: *mut u64,
+        sgntLen: u32,
+        sgnt: *mut u8,
+        decoded: *mut u8,
+    ) -> bool;
+}
+extern "C" {
     #[doc = "Verify the signature `sgnt` of a message `msg`.\n\n@param a Hash algorithm to use. Allowed values for `a` are ...\n- Spec_Hash_Definitions_SHA2_256,\n- Spec_Hash_Definitions_SHA2_384, and\n- Spec_Hash_Definitions_SHA2_512.\n@param modBits Count of bits in the modulus (`n`).\n@param eBits Count of bits in `e` value.\n@param pkey Pointer to public key created by `Hacl_RSAPSS_new_rsapss_load_pkey`.\n@param saltLen Length of salt.\n@param sgntLen Length of signature.\n@param sgnt Pointer to `sgntLen` bytes where the signature is read from.\n@param msgLen Length of message.\n@param msg Pointer to `msgLen` bytes where the message is read from.\n\n@return Returns true if and only if the signature is valid."]
     pub fn Hacl_RSAPSS_rsapss_verify(
         a: Spec_Hash_Definitions_hash_alg,
