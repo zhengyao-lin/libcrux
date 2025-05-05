@@ -701,43 +701,20 @@ dependencies = [
 
 [[package]]
 name = "hax-lib"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/?branch=main#c2093b4963099522c65f5cd42b96d6433afb0617"
+version = "0.1.0-alpha.1"
+source = "git+https://github.com/hacspec/hax/?tag=cargo-hax-v0.1.0-alpha.1#c37db7cd0d035352bbd6df5e9394e682881b9c4f"
 dependencies = [
- "hax-lib-macros 0.1.0-pre.1 (git+https://github.com/hacspec/hax/?branch=main)",
- "num-bigint",
- "num-traits",
-]
-
-[[package]]
-name = "hax-lib"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/#c2093b4963099522c65f5cd42b96d6433afb0617"
-dependencies = [
- "hax-lib-macros 0.1.0-pre.1 (git+https://github.com/hacspec/hax/)",
+ "hax-lib-macros",
  "num-bigint",
  "num-traits",
 ]
 
 [[package]]
 name = "hax-lib-macros"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/?branch=main#c2093b4963099522c65f5cd42b96d6433afb0617"
+version = "0.1.0-alpha.1"
+source = "git+https://github.com/hacspec/hax/?tag=cargo-hax-v0.1.0-alpha.1#c37db7cd0d035352bbd6df5e9394e682881b9c4f"
 dependencies = [
- "hax-lib-macros-types 0.1.0-pre.1 (git+https://github.com/hacspec/hax/?branch=main)",
- "paste",
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "syn 2.0.77",
-]
-
-[[package]]
-name = "hax-lib-macros"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/#c2093b4963099522c65f5cd42b96d6433afb0617"
-dependencies = [
- "hax-lib-macros-types 0.1.0-pre.1 (git+https://github.com/hacspec/hax/)",
+ "hax-lib-macros-types",
  "paste",
  "proc-macro-error",
  "proc-macro2",
@@ -747,20 +724,8 @@ dependencies = [
 
 [[package]]
 name = "hax-lib-macros-types"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/?branch=main#c2093b4963099522c65f5cd42b96d6433afb0617"
-dependencies = [
- "proc-macro2",
- "quote",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "hax-lib-macros-types"
-version = "0.1.0-pre.1"
-source = "git+https://github.com/hacspec/hax/#c2093b4963099522c65f5cd42b96d6433afb0617"
+version = "0.1.0-alpha.1"
+source = "git+https://github.com/hacspec/hax/?tag=cargo-hax-v0.1.0-alpha.1#c37db7cd0d035352bbd6df5e9394e682881b9c4f"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -934,8 +899,8 @@ version = "0.0.2-beta.2"
 dependencies = [
  "clap",
  "getrandom",
- "hax-lib 0.1.0-pre.1 (git+https://github.com/hacspec/hax/?branch=main)",
- "hax-lib-macros 0.1.0-pre.1 (git+https://github.com/hacspec/hax/?branch=main)",
+ "hax-lib",
+ "hax-lib-macros",
  "hex",
  "libcrux",
  "libcrux-ecdh",
@@ -1041,7 +1006,7 @@ name = "libcrux-ml-kem"
 version = "0.0.2-beta.2"
 dependencies = [
  "criterion",
- "hax-lib 0.1.0-pre.1 (git+https://github.com/hacspec/hax/)",
+ "hax-lib",
  "hex",
  "libcrux-intrinsics",
  "libcrux-platform",
@@ -1087,7 +1052,7 @@ version = "0.0.2-beta.2"
 dependencies = [
  "cavp",
  "criterion",
- "hax-lib 0.1.0-pre.1 (git+https://github.com/hacspec/hax/)",
+ "hax-lib",
  "hex",
  "libcrux-intrinsics",
  "libcrux-platform",
